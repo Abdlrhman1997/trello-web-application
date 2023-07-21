@@ -14,7 +14,10 @@ export const signup = asyncHandler(async (req, res, next) => {
     return next(new Error("email already exist", { cause: 401 }));
   }
 
-  const hashPassword = bcrypt.hashSync(password, 10);
+  const hashPassword = bcrypt.hashSync(
+    password,
+    parseInt(process.env.SALT_ROUND)
+  );
   const cryptPhone = cryptoJS.AES.encrypt(phone, "sasadanceonmsasa").toString();
   const user = await userModel.create({
     userName,

@@ -5,18 +5,18 @@ import { asyncHandler } from "../utils/errorHandling.js";
 export const tokenCheck = asyncHandler(async (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization?.startsWith("Bearer ")) {
+  if (!authorization?.startsWith(process.env.TOKEN_BEARER)) {
     return next(
       new Error("authorization token required invalid bearer key", {
         cause: 400,
       })
     );
   }
-  const token = authorization.split("Bearer ")[1];
+  const token = authorization.split(process.env.TOKEN_BEARER)[1];
   if (!token) {
     return next(new Error("token is required"), { cause: 400 });
   }
-  const decoded = jwt.verify(token, "sasadanceonmsasa");
+  const decoded = jwt.verify(token, process.env.TOKEN_SIGNATURE);
   if (!decoded?.id) {
     return next(new Error("invalid token payload"));
   }
