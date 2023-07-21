@@ -4,6 +4,7 @@ const router = Router();
 
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
-// router.get("/confirmEmail", authController.confirmEmail);
+router.get("/confirmEmail/:token", authController.confirmEmail);
+router.get("/resendConfirmEmail/:token", authController.resendConfirmEmail);
 
 export default router;
