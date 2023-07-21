@@ -3,10 +3,16 @@ import userModel from "../../DB/model/user.model.js";
 import { asyncHandler } from "../utils/errorHandling.js";
 
 export const tokenCheck = asyncHandler(async (req, res, next) => {
-  const { token } = req.headers;
-  if (!token) {
-    return next(new Error("authorization token required", { cause: 400 }));
+  const { authorization } = req.headers;
+
+  if (!authorization?.startsWith("Bearer ")) {
+    return next(
+      new Error("authorization token required invalid bearer key", {
+        cause: 400,
+      })
+    );
   }
+  const token = authorization.split("Bearer ")[1];
   const decoded = jwt.verify(token, "sasadanceonmsasa");
   if (!decoded?.id) {
     return next(new Error("invalid token payload"));
