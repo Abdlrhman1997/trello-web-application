@@ -13,6 +13,9 @@ export const tokenCheck = asyncHandler(async (req, res, next) => {
     );
   }
   const token = authorization.split("Bearer ")[1];
+  if (!token) {
+    return next(new Error("token is required"), { cause: 400 });
+  }
   const decoded = jwt.verify(token, "sasadanceonmsasa");
   if (!decoded?.id) {
     return next(new Error("invalid token payload"));
