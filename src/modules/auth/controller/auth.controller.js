@@ -4,15 +4,10 @@ import cryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
 import { asyncHandler } from "../../../utils/errorHandling.js";
 import sendEmail from "../../../utils/email.js";
-import * as auhtValidation from "../authValidation.js";
 
 export const signup = asyncHandler(async (req, res, next) => {
   const { userName, email, password, cPassword, phone, gender } = req.body;
 
-  const validationResult = auhtValidation.signup.validate(req.body, {
-    abortEarly: false,
-  });
-  return res.json(validationResult);
   if (!(password === cPassword)) {
     return next(new Error("password doesn't match", { cause: 400 }));
   }
