@@ -9,18 +9,37 @@ const router = Router();
 // router.post("/login", userController.login);
 router.patch(
   "/changePassword",
+  validation(userValditors.token),
   tokenCheck,
   validation(userValditors.changePassword),
   userController.changePassword
 );
 router.put(
   "/update",
-  validation(userValditors.updateUser),
+  validation(userValditors.token),
   tokenCheck,
+  validation(userValditors.updateUser),
   userController.updateUser
 );
-router.delete("/delete", tokenCheck, userController.deleteUser);
-router.patch("/logout", tokenCheck, userController.logout);
-router.patch("/softDelete", tokenCheck, userController.softDelete);
+router.delete(
+  "/delete",
+  validation(userValditors.token),
+  tokenCheck,
+  validation(userValditors.deleteUser),
+  userController.deleteUser
+);
+router.patch(
+  "/logout",
+  validation(userValditors.token),
+  tokenCheck,
+  userController.logout
+);
+router.patch(
+  "/softDelete",
+  validation(userValditors.token),
+  tokenCheck,
+  validation(userValditors.softDelete),
+  userController.softDelete
+);
 
 export default router;

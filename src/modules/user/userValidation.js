@@ -13,12 +13,6 @@ export const changePassword = {
       cPassword: joi.string().valid(joi.ref("newPassword")).required(),
     })
     .required(),
-
-  headers: joi
-    .object({
-      authorization: joi.string().min(219).max(219).required(),
-    })
-    .required(),
 };
 export const updateUser = {
   body: joi
@@ -29,6 +23,14 @@ export const updateUser = {
         .string()
         .pattern(new RegExp(/^01[0125][0-9]{8}$/))
         .required(),
+    })
+    .required(),
+};
+
+export const token = {
+  headers: joi
+    .object({
+      authorization: joi.string().min(219).max(219).required(),
     })
     .required(),
 };

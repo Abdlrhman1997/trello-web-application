@@ -17,18 +17,31 @@ router.get(
   tokenCheck,
   taskController.getAllCreatedTasks
 );
-router.get("/getAllAssignTasks", tokenCheck, taskController.getAllAssignTasks);
-router.get("/allLateTasks", tokenCheck, taskController.allLateTasks);
+router.get(
+  "/getAllAssignTasks",
+  validation(userValditors.token),
+  tokenCheck,
+  taskController.getAllAssignTasks
+);
+router.get(
+  "/allLateTasks",
+  validation(userValditors.token),
+  tokenCheck,
+  taskController.allLateTasks
+);
 router.get(
   "/getTasksAssignToAnyUser/:id",
+  validation(userValditors.token),
   tokenCheck,
   taskController.getTasksAssignToAnyUser
 );
 
 router.put(
   "/updateTask/:id",
-  validation(taskValditor.updateTask),
+  validation(userValditors.token),
   tokenCheck,
+  validation(taskValditor.updateTask),
+
   taskController.updateTask
 );
 
